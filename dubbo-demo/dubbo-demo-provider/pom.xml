@@ -1,18 +1,11 @@
-<!--
- - Copyright 1999-2011 Alibaba Group.
- -  
- - Licensed under the Apache License, Version 2.0 (the "License");
- - you may not use this file except in compliance with the License.
- - You may obtain a copy of the License at
- -  
- -      http://www.apache.org/licenses/LICENSE-2.0
- -  
- - Unless required by applicable law or agreed to in writing, software
- - distributed under the License is distributed on an "AS IS" BASIS,
- - WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- - See the License for the specific language governing permissions and
- - limitations under the License.
--->
+<!-- - Copyright 1999-2011 Alibaba Group. - - Licensed under the Apache License, 
+	Version 2.0 (the "License"); - you may not use this file except in compliance 
+	with the License. - You may obtain a copy of the License at - - http://www.apache.org/licenses/LICENSE-2.0 
+	- - Unless required by applicable law or agreed to in writing, software - 
+	distributed under the License is distributed on an "AS IS" BASIS, - WITHOUT 
+	WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. - See the 
+	License for the specific language governing permissions and - limitations 
+	under the License. -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
@@ -27,6 +20,7 @@
 	<description>The demo provider module of dubbo project</description>
 	<properties>
 		<skip_maven_deploy>false</skip_maven_deploy>
+		<spring.version>3.2.7.RELEASE</spring.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -38,11 +32,55 @@
 			<groupId>com.alibaba</groupId>
 			<artifactId>dubbo</artifactId>
 			<version>${project.parent.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!--spring 开始 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring</artifactId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<!-- spring 结束 -->
 		<dependency>
 			<groupId>org.javassist</groupId>
 			<artifactId>javassist</artifactId>
@@ -124,6 +162,10 @@
 			<artifactId>slf4j-api</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
 		</dependency>
@@ -166,20 +208,22 @@
 				</executions>
 			</plugin>
 			<plugin>
+				<!-- 整合打包，将源码构建到文档归档描述符中的目录 -->
 				<artifactId>maven-assembly-plugin</artifactId>
-                <configuration>
-                    <descriptor>src/main/assembly/assembly.xml</descriptor>
-                </configuration>
-                <executions>
+				<configuration>
+					<descriptor>src/main/assembly/assembly.xml</descriptor>
+				</configuration>
+				<executions>
 					<execution>
 						<id>make-assembly</id>
 						<phase>package</phase>
 						<goals>
+							<!-- 执行一次 -->
 							<goal>single</goal>
 						</goals>
 					</execution>
 				</executions>
-            </plugin>
+			</plugin>
 		</plugins>
 	</build>
 </project>
